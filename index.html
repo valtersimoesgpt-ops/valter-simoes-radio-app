@@ -1,1 +1,521 @@
-!DOCTYPE html> até </html>,
+HTML
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080808">
+<meta name="description" content="VALTER SIMÕES RÁDIOS - Ouça suas rádios favoritas pela internet.">
+<title>VALTER SIMÕES RÁDIOS</title>
+<style>
+:root {
+  --bg:#080808;
+  --panel:#151515;
+  --gold:#d6b46a;
+  --muted:#999;
+  --white:#f5f5f5;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--white);
+  font-family:Arial,sans-serif;
+  padding-bottom:105px;
+}
+header {
+  padding:27px 20px;
+  background:linear-gradient(145deg,#202020,#080808);
+  border-bottom:1px solid #333;
+}
+.logo {
+  font-size:12px;
+  letter-spacing:5px;
+  color:var(--gold);
+  font-weight:bold;
+}
+h1 {
+  font-size:27px;
+  letter-spacing:2px;
+  margin:10px 0 5px;
+}
+h1 span {color:var(--gold)}
+.subtitle {
+  font-size:11px;
+  color:var(--muted);
+}
+main {
+  padding:18px;
+  max-width:650px;
+  margin:auto;
+}
+.search {
+  width:100%;
+  padding:15px;
+  border-radius:12px;
+  border:1px solid #333;
+  background:#171717;
+  color:white;
+  font-size:15px;
+  outline:none;
+}
+.tabs {
+  display:flex;
+  gap:10px;
+  margin:17px 0;
+}
+.tabs button {
+  border:1px solid #343434;
+  background:#171717;
+  color:white;
+  padding:12px 17px;
+  border-radius:10px;
+}
+.tabs button.active {
+  border-color:var(--gold);
+  color:var(--gold);
+}
+.section-title {
+  font-size:17px;
+  margin:24px 0 13px;
+}
+.station {
+  background:var(--panel);
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:14px;
+  margin-bottom:11px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.station-icon {
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:#302719;
+  color:var(--gold);
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  flex-shrink:0;
+}
+.station-info {
+  flex:1;
+  min-width:0;
+}
+.station-name {
+  font-weight:bold;
+  font-size:14px;
+  overflow-wrap:anywhere;
+}
+.station-url {
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.play {
+  background:var(--gold);
+  color:#111;
+  border:0;
+  border-radius:50%;
+  width:40px;
+  height:40px;
+  font-size:17px;
+}
+.star {
+  background:none;
+  border:0;
+  color:var(--gold);
+  font-size:22px;
+}
+.empty {
+  text-align:center;
+  color:var(--muted);
+  padding:30px 12px;
+  line-height:1.7;
+}
+.addbox {
+  background:var(--panel);
+  border:1px solid #303030;
+  border-radius:15px;
+  padding:17px;
+  margin-top:24px;
+}
+.addbox input {
+  display:block;
+  width:100%;
+  padding:13px;
+  margin:10px 0;
+  background:#080808;
+  border:1px solid #383838;
+  border-radius:9px;
+  color:white;
+  font-size:14px;
+}
+.gold-button {
+  width:100%;
+  padding:14px;
+  background:var(--gold);
+  border:0;
+  border-radius:10px;
+  font-weight:bold;
+  margin-top:5px;
+}
+.player {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#171717;
+  border-top:1px solid #37302a;
+  padding:13px 15px calc(13px + env(safe-area-inset-bottom));
+  display:flex;
+  align-items:center;
+  gap:12px;
+  z-index:5;
+}
+.player-icon {
+  width:43px;
+  height:43px;
+  border-radius:10px;
+  background:#302719;
+  color:var(--gold);
+  display:grid;
+  place-items:center;
+}
+.player-info {
+  flex:1;
+  min-width:0;
+}
+.player-info strong {
+  font-size:13px;
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+#status {
+  font-size:11px;
+  color:var(--muted);
+  margin-top:5px;
+}
+.player button {
+  background:none;
+  border:0;
+  color:white;
+  font-size:23px;
+}
+#volume {
+  width:65px;
+  accent-color:var(--gold);
+}
+footer {
+  text-align:center;
+  color:#666;
+  font-size:10px;
+  padding:25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">VS • RÁDIO DIGITAL</div>
+  <h1>VALTER <span>SIMÕES</span></h1>
+  <div class="subtitle">SUA CONEXÃO COM O MUNDO DO RÁDIO</div>
+</header>
+
+<main>
+
+  <input
+    id="search"
+    class="search"
+    placeholder="Pesquisar emissoras..."
+    autocomplete="off"
+  >
+
+  <div class="tabs">
+    <button class="active" id="allTab" onclick="showTab('all')">
+      Todas
+    </button>
+    <button id="favTab" onclick="showTab('fav')">
+      ★ Favoritas
+    </button>
+  </div>
+
+  <h2 class="section-title">Estações disponíveis</h2>
+
+  <div id="stations"></div>
+
+  <section class="addbox">
+    <h3 style="margin:0 0 12px;color:var(--gold)">
+      Adicionar uma rádio
+    </h3>
+
+    <input id="radioName" placeholder="Nome da emissora">
+
+    <input id="radioUrl" placeholder="Endereço direto do áudio">
+
+    <button class="gold-button" onclick="addRadio()">
+      ADICIONAR EMISSORA
+    </button>
+
+    <p style="font-size:11px;color:#888;line-height:1.5">
+      Informe o endereço direto da transmissão de áudio.
+      Endereços de páginas comuns podem não funcionar.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  VALTER SIMÕES RÁDIOS • EXPERIÊNCIA DIGITAL
+</footer>
+
+<div class="player">
+
+  <div class="player-icon">♫</div>
+
+  <div class="player-info">
+    <strong id="playingName">Nenhuma rádio selecionada</strong>
+    <div id="status">Aguardando reprodução</div>
+  </div>
+
+  <button id="mainPlay" onclick="togglePlayback()">▶</button>
+
+  <input
+    id="volume"
+    type="range"
+    min="0"
+    max="1"
+    step="0.05"
+    value="0.8"
+    aria-label="Volume"
+  >
+
+</div>
+
+<audio id="audio" preload="none"></audio>
+
+<script>
+const audio = document.getElementById('audio');
+
+let radios = JSON.parse(
+  localStorage.getItem('vs_radios') || '[]'
+);
+
+let favorites = JSON.parse(
+  localStorage.getItem('vs_favorites') || '[]'
+);
+
+let current = null;
+let tab = 'all';
+
+function save() {
+  localStorage.setItem('vs_radios', JSON.stringify(radios));
+  localStorage.setItem('vs_favorites', JSON.stringify(favorites));
+}
+
+function safe(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[char]));
+}
+
+function render() {
+  const query = document.getElementById('search').value.toLowerCase();
+
+  const list = radios.filter(r =>
+    (tab === 'all' || favorites.includes(r.id)) &&
+    (
+      r.name.toLowerCase().includes(query) ||
+      r.url.toLowerCase().includes(query)
+    )
+  );
+
+  const box = document.getElementById('stations');
+
+  if (!list.length) {
+    box.innerHTML = `
+      <div class="empty">
+        Nenhuma emissora cadastrada ainda.
+        <br>
+        Adicione uma rádio usando um endereço direto de transmissão.
+      </div>
+    `;
+    return;
+  }
+
+  box.innerHTML = list.map(r => `
+    <div class="station">
+      <div class="station-icon">♫</div>
+
+      <div class="station-info">
+        <div class="station-name">${safe(r.name)}</div>
+        <div class="station-url">${safe(r.url)}</div>
+      </div>
+
+      <button
+        class="star"
+        onclick="favorite('${r.id}')"
+        aria-label="Favoritar"
+      >
+        ${favorites.includes(r.id) ? '★' : '☆'}
+      </button>
+
+      <button
+        class="play"
+        onclick="playRadio('${r.id}')"
+        aria-label="Reproduzir"
+      >
+        ▶
+      </button>
+    </div>
+  `).join('');
+}
+
+function showTab(value) {
+  tab = value;
+
+  document.getElementById('allTab')
+    .classList.toggle('active', value === 'all');
+
+  document.getElementById('favTab')
+    .classList.toggle('active', value === 'fav');
+
+  render();
+}
+
+function favorite(id) {
+  favorites = favorites.includes(id)
+    ? favorites.filter(x => x !== id)
+    : [...favorites, id];
+
+  save();
+  render();
+}
+
+function addRadio() {
+  const name = document.getElementById('radioName').value.trim();
+  const url = document.getElementById('radioUrl').value.trim();
+
+  if (!name || !url) {
+    alert('Informe o nome e o endereço da rádio.');
+    return;
+  }
+
+  try {
+    const parsed = new URL(url);
+
+    if (!['http:', 'https:'].includes(parsed.protocol)) {
+      throw new Error();
+    }
+  } catch (error) {
+    alert('Informe um endereço válido começando com http:// ou https://');
+    return;
+  }
+
+  radios.push({
+    id: String(Date.now()) + Math.random().toString(16).slice(2),
+    name,
+    url
+  });
+
+  save();
+
+  document.getElementById('radioName').value = '';
+  document.getElementById('radioUrl').value = '';
+
+  showTab('all');
+
+  alert('Emissora adicionada!');
+}
+
+function playRadio(id) {
+  const radio = radios.find(r => r.id === id);
+
+  if (!radio) return;
+
+  current = radio;
+  audio.src = radio.url;
+  audio.load();
+
+  document.getElementById('playingName').textContent = radio.name;
+  document.getElementById('status').textContent = 'Conectando...';
+
+  audio.play().catch(() => {
+    document.getElementById('status').textContent =
+      'Falha ao iniciar. Verifique o endereço ou a transmissão.';
+  });
+
+  if ('mediaSession' in navigator && 'MediaMetadata' in window) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: radio.name,
+      artist: 'VALTER SIMÕES RÁDIOS'
+    });
+
+    navigator.mediaSession.setActionHandler('play', () => audio.play());
+
+    navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+  }
+}
+
+function togglePlayback() {
+  if (!current) {
+    document.getElementById('status').textContent =
+      'Escolha uma emissora primeiro.';
+    return;
+  }
+
+  if (audio.paused) {
+    audio.play().catch(() => {
+      document.getElementById('status').textContent =
+        'Falha ao iniciar a transmissão.';
+    });
+  } else {
+    audio.pause();
+  }
+}
+
+audio.addEventListener('playing', () => {
+  document.getElementById('status').textContent = 'Reproduzindo';
+  document.getElementById('mainPlay').textContent = 'Ⅱ';
+});
+
+audio.addEventListener('pause', () => {
+  document.getElementById('status').textContent = 'Pausado';
+  document.getElementById('mainPlay').textContent = '▶';
+});
+
+audio.addEventListener('waiting', () => {
+  document.getElementById('status').textContent = 'Carregando áudio...';
+});
+
+audio.addEventListener('error', () => {
+  document.getElementById('status').textContent =
+    'Erro na transmissão ou endereço indisponível.';
+});
+
+document.getElementById('volume').addEventListener('input', event => {
+  audio.volume = Number(event.target.value);
+});
+
+document.getElementById('search').addEventListener('input', render);
+
+audio.volume = 0.8;
+
+render();
+</script>
+
+</body>
+</html>
